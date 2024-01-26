@@ -1,5 +1,5 @@
 import tkinter
-from copy import deepcopy
+from solver import Solver
 
 
 # This is a sample Python script.
@@ -24,7 +24,8 @@ def solveWorker():
         if checkSolve(matrix):
             warning.config(text="Already solved!")
         else:
-            attemptSolve(matrix)
+            solveeer = Solver(matrix)
+
 
 
 def findZero(matrix):
@@ -45,6 +46,7 @@ def checkSolve(matrix):
             else:
                 return False
     return True
+"""
 
 
 def attemptSolve(matrix):
@@ -68,7 +70,6 @@ def attemptSolve(matrix):
     for i in allMoves:
         print(i)
     print("Done")
-
 def moveUp(currentInfo):
     currentInfo["steps"].append("up")
     rebuiltArr = deepcopy(currentInfo["matrix"])
@@ -145,7 +146,7 @@ def attemptSolveRecursion(currentInfo):
             except:
                 break
         return allMoves
-
+ """
 
 parent = tkinter.Tk()
 tkinter.Label(parent, text="Vlož číselnou notaci puzzle:").grid()

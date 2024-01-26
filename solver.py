@@ -1,14 +1,19 @@
-
 from copy import deepcopy
+
+
 class Solver:
     def __init__(self, matrix):
         self.original = matrix
         self.solutions = []
+        self.solve(matrix)
+        print(self.solutions)
+
     def findZero(self, matrix):
         for x in range(3):
             for y in range(3):
                 if matrix[x][y] == 0:
                     return [x, y]
+
     def solve(self, matrix):
         if self.checkSolve(matrix):
             print("already solved")
@@ -22,6 +27,7 @@ class Solver:
                 self.moveDown(deepcopy(matrix), [])
             if zeroIsAt[1] != 2:
                 self.moveRight(deepcopy(matrix), [])
+
     def moveUp(self, matrix, steps):
         steps.append("up")
         matrixLoc = self.findZero(matrix)
@@ -29,6 +35,7 @@ class Solver:
         matrix[matrixLoc[0] - 1][matrixLoc[1]] = matrix[matrixLoc[0]][matrixLoc[1]]
         matrix[matrixLoc[0]][matrixLoc[1]] = helper
         self.solveRecursion(matrix, steps)
+
     def moveDown(self, matrix, steps):
         steps.append("down")
         matrixLoc = self.findZero(matrix)
@@ -36,6 +43,7 @@ class Solver:
         matrix[matrixLoc[0] + 1][matrixLoc[1]] = matrix[matrixLoc[0]][matrixLoc[1]]
         matrix[matrixLoc[0]][matrixLoc[1]] = helper
         self.solveRecursion(matrix, steps)
+
     def moveLeft(self, matrix, steps):
         steps.append("left")
         matrixLoc = self.findZero(matrix)
@@ -43,6 +51,7 @@ class Solver:
         matrix[matrixLoc[0]][matrixLoc[1] - 1] = matrix[matrixLoc[0]][matrixLoc[1]]
         matrix[matrixLoc[0]][matrixLoc[1]] = helper
         self.solveRecursion(matrix, steps)
+
     def moveRight(self, matrix, steps):
         steps.append("right")
         matrixLoc = self.findZero(matrix)
@@ -50,6 +59,7 @@ class Solver:
         matrix[matrixLoc[0]][matrixLoc[1] + 1] = matrix[matrixLoc[0]][matrixLoc[1]]
         matrix[matrixLoc[0]][matrixLoc[1]] = helper
         self.solveRecursion(matrix, steps)
+
     def checkSolve(self, matrix):
         soughtInt = 1
         for x in range(3):
@@ -61,6 +71,7 @@ class Solver:
                 else:
                     return False
         return True
+
     def solveRecursion(self, matrix, steps):
         if self.checkSolve(matrix):
             self.solutions.append(steps)
