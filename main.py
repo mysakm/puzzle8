@@ -11,9 +11,12 @@ from solver import Solver
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+
 # 182043765
 
 def solveWorker():
+    zmenitinittabule()
     notace = entry.get()
     if len(notace) != 9:
         warning.config(text="Nesprávné množství elementů.")
@@ -24,8 +27,7 @@ def solveWorker():
         if checkSolve(matrix):
             warning.config(text="Already solved!")
         else:
-            solveeer = Solver(matrix)
-
+            solveeer = Solver(matrix, listReseni, resNum.get())
 
 
 def findZero(matrix):
@@ -46,6 +48,22 @@ def checkSolve(matrix):
             else:
                 return False
     return True
+
+
+def zmenittabule(param):
+    print(param)
+    selectedTurn = listReseni.get(listReseni.curselection())
+    for y in range(9):
+        visualMat[y].config(text=" " + selectedTurn[y] + " ")
+
+
+def zmenitinittabule():
+    selectedTurn = entry.get()
+    for y in range(9):
+        visualMat[y].config(text=" " + selectedTurn[y] + " ")
+        print(selectedTurn[y])
+
+
 """
 
 
@@ -149,11 +167,25 @@ def attemptSolveRecursion(currentInfo):
  """
 
 parent = tkinter.Tk()
+parent.title = "Puzzle8 solver"
 tkinter.Label(parent, text="Vlož číselnou notaci puzzle:").grid()
 entry = tkinter.Entry(parent)
 entry.grid()
 warning = tkinter.Label(parent, text="")
 warning.grid()
-tkinter.Button(parent, text="Vyřešit", command=solveWorker).grid()
+tkinter.Button(parent, text="Vyřešit", command=solveWorker).grid(row=2, column=0)
+tkinter.Label(parent, text="Vyber počet hledaných výsledků\n(Více výsledků má vyšší šanci najít nejlepší řešení, ale trvá déle):").grid(row=3, column=0)
+resNum = tkinter.Entry(parent)
+resNum.insert(0, "4")
+resNum.grid(row=4, column=0)
+listReseni = tkinter.Listbox(parent, selectmode="BROWSE")
+listReseni.grid(row=0, column=1, rowspan=5, sticky="nsew")
+listReseni.bind("<ButtonRelease-1>", zmenittabule)
+entry.insert(0, "182043765")
 entry.focus()
+visualMat = []
+for x in range(3):
+    for y in range(3):
+        visualMat.append(tkinter.Label(parent, text="  0 ", font="Arial 36 bold"))
+        visualMat[x * 3 + y].grid(row=x, column=y + 2)
 tkinter.mainloop()
